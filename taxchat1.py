@@ -8,18 +8,14 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 
 # Prompt
-template1 = """Answer the question based on the context below. If the
-question cannot be answered using the information provided answer
-with "Please call (312)xxxxxx for more assistance".
+template1 = """Answer the question based on the context below. 
 Context: 
 As a Tax Resolution Expert ChatBot in the United States provide 
 I. Introduction A. What is a Tax Resolution Expert B. Description of Services Offered
 II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution 
 III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. Contact Information for Professional Tax Resolution Services
 IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211
-Question: {topic} 
-
-Answer: """
+"""
 
 
 if 'conversation' not in st.session_state:
