@@ -3,7 +3,7 @@ import streamlit as st
 from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
-
+from langchain.chains import ConversationChain
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
