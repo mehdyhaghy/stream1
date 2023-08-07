@@ -37,7 +37,7 @@ def chat_with_bot(message):
 st.title("CPA Chatbot")
 
 def get_text():
-    input_text = st.text_input("You:", "Hello, how are you?", key="input")
+    input_text = st.text_input("You:", "Hello, I'm Robby, your AI assistance for tax resolution. how can i help you today?", key="input")
     return input_text
 
 user_input = get_text()
