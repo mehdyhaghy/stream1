@@ -25,6 +25,9 @@ Answer: """
 if 'conversation' not in st.session_state:
     st.session_state.conversation = []
 
+st.session_state.conversation = [{"role": "system", "content": template1},]
+
+
 def chat_with_bot(message):
     st.session_state.conversation.append({"role": "user", "content": message})
     response = openai.ChatCompletion.create(
@@ -54,6 +57,6 @@ if st.session_state.conversation:
             message(msg['content'], key=str(i))
     
     st.session_state.conversation.append({"role": "assistant", "content": msg})
-    st.chat_message("user").write(prompt)
+    st.chat_message("user").write(msg)
     st.session_state.messages.append(msg)
     st.chat_message("bot").write(msg)
