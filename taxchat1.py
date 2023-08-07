@@ -27,10 +27,10 @@ prompt_template = PromptTemplate(
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
+st.session_state.messages.append({"role": "user", "content": "Hi, I'm a tax resolution AI, how can I help you today?"})
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.session_state.messages.append({"role": "user", "content": "Hi, I'm a tax resolution AI, how can I help you today?"})
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
