@@ -1,45 +1,69 @@
+# Import Libraries
+
 import openai
 import streamlit as st
-from langchain import PromptTemplate
+from streamlit_chat import message
 
-st.title("CPA Chat")
+# Open API key
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["OPEN_API_KEY"]
 
-prompt_template=PromptTemplate.from_template("""Answer the question based on the context below. If the
-question cannot be answered using the information provided answer
-with "Please call (312)xxxxxx for more assistance".
-Context: 
-As a Tax Resolution Expert ChatBot in the United States provide 
-I. Introduction A. What is a Tax Resolution Expert B. Description of Services Offered
-II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution 
-III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. Contact Information for Professional Tax Resolution Services
-IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211
-Question: {query}
+# Generating responses from the api
 
-Answer: """)
+def generate_response(prompt):
+    completions = openai.Completion.create(
+        engine = "text-davinci-003",
+        prompt = prompt,
+        max_tokens = 1024,
+        n=1,
+        stop=None,
+        temperature=0.5
+    )
+    messages = completions.choices[0].text
+    return messages
 
-#prompt_template.format()
+# Creating the chatbot interfaces
 
-chain_type_kwargs = {"prompt": prompt_template}
+st.title("Chatbot : Coding Craft + OpenAI ")
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+# Storing the input
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
+
+# Creating a function that returns the user's input from a text input field
+
+def get_text():
+    input_text = st.text_input("You : ", "Hello, Coders, how are you?", key = "input")
+    return input_text
+
+# We will generate response using the 'generate response' function and store into variable called output
+
+user_input = get_text()
+
+if user_input:
+    output = generate_response(user_input)
+
+    # Store the output
+    st.session_state.past.append(user_input)
+    st.session_state.generated.append(output)
 
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+# Finally we display the chat history
 
-if prompt := st.chat_input():
+if st.session_state['generated']:
 
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-    msg = response.choices[0].message
-    st.session_state.messages.append(msg)
-    st.chat_message("assistant").write(msg.content)
+    for i in range(len(st.session_state['generated']) -1, -1, -1):
+        message(st.session_state["generated"][i], key=str(i))
+        message(st.session_state["past"][i], is_user=True, key=str(i) + '_user')
+
+
+
+
+
+
+
+
+
