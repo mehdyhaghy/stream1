@@ -19,6 +19,9 @@ Question: {query}
 
 Answer: """
 
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you with your tax resolution questions?"}]
+    
 prompt_template = PromptTemplate(
     input_variables=["query"],
     template=template
@@ -34,8 +37,6 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you with your tax resolution questions?"}]
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
