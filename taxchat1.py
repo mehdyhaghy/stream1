@@ -58,5 +58,5 @@ if st.session_state.conversation:
     
     st.session_state.conversation.append({"role": "assistant", "content": msg})
     st.chat_message("user").write(msg)
-    st.session_state.messages.append(msg)
+    st.session_state.messages.append(user_input)
     st.chat_message("bot").write(msg)
