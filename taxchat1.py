@@ -3,6 +3,8 @@ import streamlit as st
 from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
+from langchain.memory import ConversationBufferWindowMemory
+
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
@@ -24,6 +26,7 @@ Answer: """
 prompt = PromptTemplate(
     input_variables=["topic"],
     template=template1,
+    memory=ConversationBufferWindowMemory(k=2),
 )
 
 chain = LLMChain(llm=llm, prompt=prompt)
