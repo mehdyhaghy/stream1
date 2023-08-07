@@ -1,13 +1,12 @@
 import openai
 import streamlit as st
 from langchain import PromptTemplate
-from langchain.prompts import ChatMessagePromptTemplate
 
 st.title("CPA Chat")
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-template="""Answer the question based on the context below. If the
+prompt_template="""Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
 with "Please call (312)xxxxxx for more assistance".
 Context: 
@@ -20,13 +19,10 @@ Question: {query}
 
 Answer: """
 
+)
+prompt_template.format()
 
-messages = [
-    SystemMessagePromptTemplate.from_template(system_template),
-    HumanMessagePromptTemplate.from_template("{query}"),
-]
-prompt = ChatPromptTemplate.from_messages(messages)
-chain_type_kwargs = {"prompt": prompt}
+chain_type_kwargs = {"prompt": prompt_template}
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
