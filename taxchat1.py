@@ -53,5 +53,5 @@ if st.session_state.conversation:
     for i, msg in enumerate(st.session_state.conversation):
         if msg['role'] == 'user':
             message(msg['content'], is_user=True, key=str(i))
-        else if msg['role'] == 'assistant':
+        elif msg['role'] == 'assistant':
             message(msg['content'], key=str(i))
