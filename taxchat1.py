@@ -20,7 +20,7 @@ Question: {query}
 Answer: """
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you with your tax resolution questions?"}]
+    st.session_state.messages.append({"role": "assistant", "content": "How can I help you with your tax resolution questions?"})
     
 prompt_template = PromptTemplate(
     input_variables=["query"],
