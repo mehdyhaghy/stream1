@@ -40,7 +40,7 @@ def chat_with_bot(message):
 st.title("CPA Chatbot")
 
 def get_text():
-    input_text = st.text_input("You:", "Hello, I'm Robby, your AI assistance for tax resolution. how can i help you today?", key="input")
+    input_text = st.text_input("You:", "", key="input")
     return input_text
 
 user_input = get_text()
@@ -53,5 +53,5 @@ if st.session_state.conversation:
     for i, msg in enumerate(st.session_state.conversation):
         if msg['role'] == 'user':
             message(msg['content'], is_user=True, key=str(i))
-        else:
+        else msg['role'] == 'assistant':
             message(msg['content'], key=str(i))
