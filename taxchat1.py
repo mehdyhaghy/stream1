@@ -1,7 +1,7 @@
 import openai
 import streamlit as st
 from langchain import PromptTemplate
-
+from langchain.prompts import ChatMessagePromptTemplate
 
 st.title("CPA Chat")
 
