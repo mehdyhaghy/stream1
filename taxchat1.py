@@ -6,6 +6,15 @@ from streamlit_chat import message
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
+styl = f"""
+<style>
+    .stTextInput {{
+      position: fixed;
+      bottom: 3rem;
+    }}
+</style>
+"""
+st.markdown(styl, unsafe_allow_html=True)
 
 # Prompt
 template1 = """Answer the question based on the context below. 
@@ -28,7 +37,8 @@ def chat_with_bot(message):
     st.session_state.conversation.append({"role": "user", "content": message})
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=st.session_state.conversation
+        messages=st.session_state.conversation,
+        temperature=0.1
     )
     assistant_response = response.choices[0].message['content']
     st.session_state.conversation.append({"role": "assistant", "content": assistant_response})
