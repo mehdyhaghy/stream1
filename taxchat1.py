@@ -19,8 +19,7 @@ I. Introduction A. What is a Tax Resolution Expert B. Description of Services Of
 II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution C. Step 3: Calculate Monthly Payment Amount
 III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. Contact Information for Professional Tax Resolution Services
 IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211 """
-st.title("💬 Chatbot")
-ConversationalRetrievalChain.from_llm(combine_docs_chain_kwargs={"prompt": prompt})
+st.title("💬 CPA Chatbot")
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you with your tax resolution questions?"}]
 
@@ -29,7 +28,7 @@ for msg in st.session_state.messages:
 
 if prompt := st.chat_input():
 
-    #st.session_state.messages.append({"role": "assistant", "content": prompt})
+    st.session_state.messages.append({"role": "assistant", "content": prompt})
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
     msg = response.choices[0].message
     st.session_state.messages.append(msg)
