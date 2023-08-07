@@ -10,6 +10,7 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
 )
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
+from langchain.chains import LLMChain
 
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
