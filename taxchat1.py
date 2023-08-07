@@ -19,9 +19,7 @@ Question: {query}
 
 Answer: """
 
-if "messages" not in st.session_state:
-    st.session_state.messages.append({"role": "assistant", "content": "How can I help you with your tax resolution questions?"})
-    
+ 
 prompt_template = PromptTemplate(
     input_variables=["query"],
     template=template
@@ -32,7 +30,7 @@ if "openai_model" not in st.session_state:
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
+st.session_state.messages.append({"role": "user", "content": prompt})
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
