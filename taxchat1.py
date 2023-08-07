@@ -3,14 +3,11 @@ import streamlit as st
 from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
-from langchain.chains import ConversationChain
-from langchain.chains.conversation.memory import ConversationBufferMemory, ConversationSummaryMemory, ConversationBufferWindowMemory, ConversationSummaryBufferMemory
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
 
 llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-16k")
-memory = ConversationSummaryBufferMemory(llm=llm, memory_key="chat_history")
 # Prompt
 template1 = """Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
