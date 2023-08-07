@@ -25,7 +25,7 @@ Answer: """
 if 'conversation' not in st.session_state:
     st.session_state.conversation = []
 
-st.session_state.conversation.append =({"role": "system", "content": template1})
+st.session_state.conversation.append({"role": "system", "content": template1})
 
 
 def chat_with_bot(message):
