@@ -1,14 +1,21 @@
 import openai
 import streamlit as st
 from langchain.chains import ConversationChain
-from langchain.llms import OpenAI
 from langchain import PromptTemplate
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    AIMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
 
 def generate_response(topic):
-  llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key)
+  llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo")
   # Prompt
   template = """Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
