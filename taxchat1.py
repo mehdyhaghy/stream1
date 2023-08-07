@@ -11,11 +11,11 @@ def blog_outline(topic):
     # Instantiate LLM model
     llm = OpenAI(model_name="text-davinci-003", openai_api_key=openai_api_key)
     # Prompt
-    template = "As a Tax Resolution Expert ChatBot in the United States provide provide guidance to {Name}
+    template = """As a Tax Resolution Expert ChatBot in the United States provide provide guidance to {Name}
 I. Introduction A. What is a Tax Resolution Expert B. Description of Services Offered
 II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution C. Step 3: Calculate Monthly Payment Amount
 III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. Contact Information for Professional Tax Resolution Services
-IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211"
+IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211"""
     prompt = PromptTemplate(input_variables=["Name"], template=template)
     prompt_query = prompt.format(topic=topic)
     # Run LLM model
