@@ -23,7 +23,6 @@ chain_type_kwargs = {"prompt": prompt_template}
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
-st.session_state.messages.append({"role": "user", "content": "Hi, I'm a tax resolution AI, how can I help you today?"})
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
