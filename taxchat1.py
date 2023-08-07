@@ -1,13 +1,10 @@
-import openai
+mport openai
 import streamlit as st
-from langchain import PromptTemplate
-from langchain.chat_models import ChatOpenAI
-from langchain.chains import LLMChain
-from langchain.memory import ConversationBufferWindowMemory
+from streamlit_chat import message
+
 
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-openai_api_key= st.secrets["OPENAI_API_KEY"]
 
 
 # Prompt
