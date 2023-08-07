@@ -11,13 +11,13 @@ from langchain.prompts.chat import (
 )
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
+
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
 
-def generate_response(topic):
-  llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo")
-  # Prompt
-  template = """Answer the question based on the context below. If the
+llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo")
+# Prompt
+template1 = """Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
 with "Please call (312)xxxxxx for more assistance".
 Context: 
@@ -29,11 +29,12 @@ IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing 
 Question: {topic}
 
 Answer: """
-  prompt = PromptTemplate(input_variables=['topic'], template=template)
-  prompt_query = prompt.format(topic=topic)
-  # Run LLM model and print out response
-  response = llm(prompt_query)
-  return st.info(response)
+prompt = PromptTemplate(
+    input_variables=["topic"],
+    template=template1,
+)
+
+chain = LLMChain(llm=llm, prompt=prompt)
 
 
 
@@ -55,6 +56,6 @@ if prompt := st.chat_input():
     
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    msg = generate_response(prompt)
+    msg = chain.run(prompt)
     st.session_state.messages.append(msg)
     st.chat_message("assistant").write(msg.content)
