@@ -9,7 +9,7 @@ from langchain.memory import ConversationBufferWindowMemory
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
 
-llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-16k")
+
 # Prompt
 template1 = """Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
@@ -29,31 +29,42 @@ prompt = PromptTemplate(
     memory=ConversationBufferWindowMemory(k=2),
 )
 
-chain = LLMChain(llm=llm, prompt=prompt)
+if 'conversation' not in st.session_state:
+    st.session_state.conversation = []
 
-if "generated" not in st.session_state:
-        st.session_state.generated = []
-if "past" not in st.session_state:
-        st.session_state.past = []
-
-with st.sidebar:
-    customer_name = st.text_input("Name", key="customer_name")
-    customer_phone = st.text_input("Phone", key="customer_phone")
-    customer_email = st.text_input("Email", key="customer_email")
-    "[Get an help from a human](https://www.google.com/)"
-    
-
-st.title("💬 CPA Chatbot")
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "Hi, I'm a Tax Resolution AI bot , How can I help you?"}]
-
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg.content)
-
-if prompt := st.chat_input():
-    
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+def chat_with_bot(message):
+    st.session_state.conversation.append({"role": "user", "content": message})
+    llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-16k")
+    chain = LLMChain(llm=llm, prompt=prompt)
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=st.session_state.conversation
+    )
     msg = chain.run(prompt)
+
+    assistant_response = response.choices[0].message['content']
+    st.session_state.conversation.append({"role": "assistant", "content": assi
+                                          
+st.title("OpenAI Streamlit Chatbot")
+
+def get_text():
+    input_text = st.text_input("You:", "Hello, how are you?", key="input")
+    return input_text
+
+user_input = get_text()
+send_button = st.button("Send")
+
+if send_button and user_input:
+    chat_with_bot(user_input)
+
+if st.session_state.conversation:
+    for i, msg in enumerate(st.session_state.conversation):
+        if msg['role'] == 'user':
+            message(msg['content'], is_user=True, key=str(i))
+        else:
+            message(msg['content'], key=str(i))
+    
+    st.session_state.conversation.append({"role": "assistant", "content": msg})
+    st.chat_message("user").write(prompt)
     st.session_state.messages.append(msg)
     st.chat_message("bot").write(msg)
