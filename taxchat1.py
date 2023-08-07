@@ -5,8 +5,8 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 with st.sidebar:
     customer_name = st.text_input("Name", key="customer_name", type="text")
-    customer_name = st.text_input("Name", key="customer_phone", type="text")
-    customer_name = st.text_input("Name", key="customer_email", type="text")
+    customer_phone = st.text_input("Phone", key="customer_phone", type="text")
+    customer_email = st.text_input("Email", key="customer_email", type="text")
     "[Get an help from a human](https://www.google.com/)"
     
 
