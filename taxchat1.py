@@ -16,7 +16,8 @@ from langchain.chains import LLMChain
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 openai_api_key= st.secrets["OPENAI_API_KEY"]
 
-llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo")
+llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-16k")
+memory = ConversationSummaryBufferMemory(llm=llm, memory_key="chat_history")
 # Prompt
 template1 = """Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
@@ -37,7 +38,10 @@ prompt = PromptTemplate(
 
 chain = LLMChain(llm=llm, prompt=prompt)
 
-
+if "generated" not in st.session_state:
+        st.session_state.generated = []
+    if "past" not in st.session_state:
+        st.session_state.past = []
 
 with st.sidebar:
     customer_name = st.text_input("Name", key="customer_name")
@@ -48,7 +52,7 @@ with st.sidebar:
 
 st.title("💬 CPA Chatbot")
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "Hi, I'm a Tax resolution AI bot , How can I help you?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "Hi, I'm a Tax Resolution AI bot , How can I help you?"}]
 
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg.content)
