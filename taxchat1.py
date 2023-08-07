@@ -23,11 +23,7 @@ IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing 
 Question: {topic} 
 
 Answer: """
-prompt = PromptTemplate(
-    input_variables=["topic"],
-    template=template1,
-    memory=ConversationBufferWindowMemory(k=2),
-)
+
 
 if 'conversation' not in st.session_state:
     st.session_state.conversation = []
@@ -45,7 +41,7 @@ def chat_with_bot(message):
     assistant_response = response.choices[0].message['content']
     st.session_state.conversation.append({"role": "assistant", "content": assi
                                           
-st.title("OpenAI Streamlit Chatbot")
+st.title("CPA Chatbot")
 
 def get_text():
     input_text = st.text_input("You:", "Hello, how are you?", key="input")
