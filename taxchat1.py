@@ -30,16 +30,12 @@ if 'conversation' not in st.session_state:
 
 def chat_with_bot(message):
     st.session_state.conversation.append({"role": "user", "content": message})
-    llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-16k")
-    chain = LLMChain(llm=llm, prompt=prompt)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=st.session_state.conversation
     )
-    msg = chain.run(prompt)
-
     assistant_response = response.choices[0].message['content']
-    st.session_state.conversation.append({"role": "assistant", "content": assi
+    st.session_state.conversation.append({"role": "assistant", "content": assistant_response})
                                           
 st.title("CPA Chatbot")
 
