@@ -51,7 +51,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Hi, I'm a Tax resolution AI bot , How can I help you?"}]
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg)
+    st.chat_message(msg["role"]).write(msg.content)
 
 if prompt := st.chat_input():
     
