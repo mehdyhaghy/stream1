@@ -19,7 +19,6 @@ Question: {query}
 
 Answer: """
 
-prompt_template.format()
 chain_type_kwargs = {"prompt": prompt_template}
 
 if "openai_model" not in st.session_state:
