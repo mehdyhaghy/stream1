@@ -6,7 +6,7 @@ st.title("CPA Chat")
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-prompt_template="""Answer the question based on the context below. If the
+prompt_template=PromptTemplate.from_template("""Answer the question based on the context below. If the
 question cannot be answered using the information provided answer
 with "Please call (312)xxxxxx for more assistance".
 Context: 
@@ -17,7 +17,9 @@ III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. C
 IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211
 Question: {query}
 
-Answer: """
+Answer: """)
+
+prompt_template.format()
 
 chain_type_kwargs = {"prompt": prompt_template}
 
