@@ -18,7 +18,7 @@ IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing 
 Question: {query}
 
 Answer: """
-"""
+
 prompt_template = PromptTemplate(
     input_variables=["query"],
     template=template
