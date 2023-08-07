@@ -19,11 +19,13 @@ Question: {query}
 
 Answer: """
 
- 
-prompt_template = PromptTemplate(
-    input_variables=["query"],
-    template=template
-)
+
+messages = [
+    SystemMessagePromptTemplate.from_template(system_template),
+    HumanMessagePromptTemplate.from_template("{query}"),
+]
+prompt = ChatPromptTemplate.from_messages(messages)
+chain_type_kwargs = {"prompt": prompt}
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
