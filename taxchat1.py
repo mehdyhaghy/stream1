@@ -19,7 +19,7 @@ Question: {query}
 
 Answer: """)
 
-prompt_template.format()
+#prompt_template.format()
 
 chain_type_kwargs = {"prompt": prompt_template}
 
