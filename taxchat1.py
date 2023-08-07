@@ -12,7 +12,7 @@ with "Please call (312)xxxxxx for more assistance".
 Context: 
 As a Tax Resolution Expert ChatBot in the United States provide 
 I. Introduction A. What is a Tax Resolution Expert B. Description of Services Offered
-II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution C. Step 3: Calculate Monthly Payment Amount
+II. The Tax Resolution Process A. Step 1: Determine State of Residence, Marital Status, and Amount Owed to IRS and State B. Step 2: Learn About Relevant Information and Forms for Tax Resolution 
 III. Seeking Further Assistance A. Tips for Successfully Resolving Tax Debt B. Contact Information for Professional Tax Resolution Services
 IV. Conclusion A. Recap of Services Offered B. Call to Action for Those Needing Further Assistance: suggest calling (312)-914-7211
 Question: {query}
@@ -23,7 +23,6 @@ prompt_template = PromptTemplate(
     input_variables=["query"],
     template=template
 )
-st.session_state.messages.append({"role": "assistant", "content": "Hi, I'm a Tax Resolution AI, how can I help you?"})
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
