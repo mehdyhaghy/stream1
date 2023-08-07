@@ -1,69 +1,27 @@
-# Import Libraries
-
 import openai
 import streamlit as st
-from streamlit_chat import message
-
-# Open API key
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# Generating responses from the api
+with st.sidebar:
+    customer_name = st.text_input("Name", key="customer_name", type="text")
+    customer_name = st.text_input("Name", key="customer_phone", type="text")
+    customer_name = st.text_input("Name", key="customer_email", type="text")
+    "[Get an help from a human](https://www.google.com/)"
+    
 
-def generate_response(prompt):
-    completions = openai.Completion.create(
-        engine = "text-davinci-003",
-        prompt = prompt,
-        max_tokens = 1024,
-        n=1,
-        stop=None,
-        temperature=0
-    )
-    messages = completions.choices[0].text
-    return messages
+st.title("💬 CPA Chatbot")
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "Hi, I'm a Tax resolution AI bot , How can I help you?"}]
 
-# Creating the chatbot interfaces
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
 
-st.title("CPA AI ")
-
-# Storing the input
-
-if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
-if 'past' not in st.session_state:
-    st.session_state['past'] = []
-
-# Creating a function that returns the user's input from a text input field
-
-def get_text():
-    input_text = st.text_input("You : ", "", key = "input")
-    return input_text
-
-# We will generate response using the 'generate response' function and store into variable called output
-
-user_input = get_text()
-
-if user_input:
-    output = generate_response(user_input)
-
-    # Store the output
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(output)
-
-
-# Finally we display the chat history
-
-if st.session_state['generated']:
-
-    for i in range(len(st.session_state['generated']) -1, -1, -1):
-        message(st.session_state["generated"][i], key=str(i))
-        message(st.session_state["past"][i], is_user=True, key=str(i) + '_user')
-
-
-
-
-
-
-
-
-
+if prompt := st.chat_input():
+    
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    msg = response.choices[0].message
+    st.session_state.messages.append(msg)
+    st.chat_message("assistant").write(msg.content)
