@@ -32,7 +32,7 @@ chain = LLMChain(llm=llm, prompt=prompt)
 
 if "generated" not in st.session_state:
         st.session_state.generated = []
-    if "past" not in st.session_state:
+if "past" not in st.session_state:
         st.session_state.past = []
 
 with st.sidebar:
