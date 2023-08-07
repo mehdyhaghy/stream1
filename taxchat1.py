@@ -17,14 +17,14 @@ def generate_response(prompt):
         max_tokens = 1024,
         n=1,
         stop=None,
-        temperature=0.5
+        temperature=0
     )
     messages = completions.choices[0].text
     return messages
 
 # Creating the chatbot interfaces
 
-st.title("Chatbot : Coding Craft + OpenAI ")
+st.title("CPA AI ")
 
 # Storing the input
 
@@ -36,7 +36,7 @@ if 'past' not in st.session_state:
 # Creating a function that returns the user's input from a text input field
 
 def get_text():
-    input_text = st.text_input("You : ", "Hello, Coders, how are you?", key = "input")
+    input_text = st.text_input("You : ", "", key = "input")
     return input_text
 
 # We will generate response using the 'generate response' function and store into variable called output
