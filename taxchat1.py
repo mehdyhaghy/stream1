@@ -59,4 +59,4 @@ if prompt := st.chat_input():
     st.chat_message("user").write(prompt)
     msg = chain.run(prompt)
     st.session_state.messages.append(msg)
-    st.chat_message("bot").write(msg.content)
+    st.chat_message("bot").write(msg)
